@@ -2,7 +2,7 @@
 
 An AI-powered study workflow that takes you from raw notes to exam-ready knowledge — upload your material, then clarify, condense, drill, test, and plan, all in one place.
 
-Built as a semester project for **AI Lab (4th Semester)**.
+Built as a semester project for **AL2002	Artificial Intelligence - Lab**.
 
 ---
 
