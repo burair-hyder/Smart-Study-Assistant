@@ -103,10 +103,9 @@ You don't have to follow the steps in order — the Home dashboard lets you jump
 
 ## 📸 Screenshots
 
+![Home Page](Smart_Study_Assistant/screenshots/home.png)
 
 ![Quiz Page](Smart_Study_Assistant/screenshots/quiz.png)
-
-![Home Page](Smart_Study_Assistant/screenshots/home.png)
 
 ![FlashCards Page](Smart_Study_Assistant/screenshots/flashcards.png)
 
