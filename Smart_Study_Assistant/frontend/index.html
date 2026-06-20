@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Smart Study Assistant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">SS</div>
+      <div>
+        <h1>Smart Study</h1>
+        <p>Study Workflow</p>
+      </div>
+    </div>
+
+    <div class="status-card">
+      <span class="status-dot" id="statusDot"></span>
+      <span id="statusText">Checking backend...</span>
+    </div>
+
+    <nav class="nav-links">
+      <button class="nav-link active" data-tab="home" onclick="switchTab('home')">
+        <span class="nav-index">00</span> Home
+      </button>
+      <button class="nav-link" data-tab="upload" onclick="switchTab('upload')">
+        <span class="nav-index">01</span> Upload Notes
+      </button>
+      <button class="nav-link" data-tab="qa" onclick="switchTab('qa')">
+        <span class="nav-index">02</span> Ask a Question
+      </button>
+      <button class="nav-link" data-tab="summary" onclick="switchTab('summary')">
+        <span class="nav-index">03</span> Summarize
+      </button>
+      <button class="nav-link" data-tab="flashcards" onclick="switchTab('flashcards')">
+        <span class="nav-index">04</span> Flashcards
+      </button>
+      <button class="nav-link" data-tab="quiz" onclick="switchTab('quiz')">
+        <span class="nav-index">05</span> Quiz
+      </button>
+      <button class="nav-link" data-tab="studyplan" onclick="switchTab('studyplan')">
+        <span class="nav-index">06</span> Study Plan
+      </button>
+    </nav>
+
+    <div class="tip-box">
+      <strong>The workflow</strong>
+      Capture your notes, clarify the confusing parts, condense them, then
+      drill, test, and plan from there. Each step feeds the next.
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main-content">
+
+    <!-- Home -->
+    <section id="home" class="tab-panel active">
+      <div class="page-header">
+        <span class="eyebrow">Welcome</span>
+        <h2><span class="header-icon">🎓</span>Smart Study Assistant</h2>
+        <p>A simple workflow to go from raw notes to exam-ready knowledge — upload your material, then clarify, condense, drill, test, and plan from there.</p>
+      </div>
+
+      <div class="panel home-status-panel">
+        <span class="status-dot" id="homeStatusDot"></span>
+        <span id="homeStatusText">Checking backend...</span>
+        <span class="home-status-divider"></span>
+        <span class="mono muted" id="homeDocCount">0 documents uploaded</span>
+      </div>
+
+      <div class="home-grid">
+        <button class="home-card" onclick="switchTab('upload')">
+          <div class="home-card-head"><span class="home-card-icon">📂</span><span class="home-card-index mono">01</span></div>
+          <h3>Upload Notes</h3>
+          <p>Add .txt, .pdf, or .docx files as the source for everything else.</p>
+        </button>
+        <button class="home-card" onclick="switchTab('qa')">
+          <div class="home-card-head"><span class="home-card-icon">💡</span><span class="home-card-index mono">02</span></div>
+          <h3>Ask a Question</h3>
+          <p>Get a context-aware answer pulled from your uploaded material.</p>
+        </button>
+        <button class="home-card" onclick="switchTab('summary')">
+          <div class="home-card-head"><span class="home-card-icon">📝</span><span class="home-card-index mono">03</span></div>
+          <h3>Summarize</h3>
+          <p>Generate one combined summary across all your documents.</p>
+        </button>
+        <button class="home-card" onclick="switchTab('flashcards')">
+          <div class="home-card-head"><span class="home-card-icon">🃏</span><span class="home-card-index mono">04</span></div>
+          <h3>Flashcards</h3>
+          <p>Drill key facts one card at a time, flip to reveal the answer.</p>
+        </button>
+        <button class="home-card" onclick="switchTab('quiz')">
+          <div class="home-card-head"><span class="home-card-icon">🧠</span><span class="home-card-index mono">05</span></div>
+          <h3>Quiz</h3>
+          <p>Test yourself with multiple-choice questions from a document.</p>
+        </button>
+        <button class="home-card" onclick="switchTab('studyplan')">
+          <div class="home-card-head"><span class="home-card-icon">📅</span><span class="home-card-index mono">06</span></div>
+          <h3>Study Plan</h3>
+          <p>Get a day-by-day plan for any topic, however many days you have.</p>
+        </button>
+      </div>
+    </section>
+
+    <!-- Upload -->
+    <section id="upload" class="tab-panel">
+      <div class="page-header">
+        <span class="eyebrow">Step 01 &middot; Capture</span>
+        <h2><span class="header-icon">📂</span>Upload Study Material</h2>
+        <p>Supported formats: .txt, .pdf, .docx — this is the source everything else draws from.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-head"><h3>Add a document</h3></div>
+          <div class="form-row">
+            <input type="file" id="fileInput" accept=".txt,.pdf,.docx" />
+          </div>
+          <div class="btn-row">
+            <button class="btn" onclick="uploadDocument()">Upload</button>
+            <button class="btn danger" onclick="clearAllDocuments()">Clear All Documents</button>
+          </div>
+          <div class="loader" id="uploadLoader"><span class="spinner"></span> Uploading document...</div>
+          <div class="alert" id="uploadAlert"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Documents</h3>
+            <span class="meta mono" id="docCountMeta">0 uploaded</span>
+          </div>
+          <div class="documents-list" id="documentsList">
+            <p class="muted">No documents uploaded yet.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Q&A -->
+    <section id="qa" class="tab-panel">
+      <div class="page-header">
+        <span class="eyebrow">Step 02 &middot; Clarify</span>
+        <h2><span class="header-icon">💡</span>Ask a Question</h2>
+        <p>Get a context-aware answer pulled from your uploaded study material.</p>
+      </div>
+
+      <div class="panel">
+        <div class="form-row">
+          <label class="field-label">Your question</label>
+          <textarea id="questionInput" placeholder="e.g. Explain the difference between mitosis and meiosis"></textarea>
+        </div>
+        <label class="checkbox-row">
+          <input type="checkbox" id="useDocs" checked />
+          Use my uploaded documents as context
+        </label>
+        <div class="btn-row">
+          <button class="btn" id="askBtn" onclick="askQuestion()">Ask</button>
+        </div>
+        <div class="loader" id="askLoader"><span class="spinner"></span> Thinking...</div>
+        <div class="alert" id="askAlert"></div>
+        <div class="scroll-output" id="answerOutput">
+          <p class="placeholder">Your answer will appear here.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Summary -->
+    <section id="summary" class="tab-panel">
+      <div class="page-header">
+        <span class="eyebrow">Step 03 &middot; Condense</span>
+        <h2><span class="header-icon">📝</span>Summarize Notes</h2>
+        <p>Generates one combined summary from all uploaded documents.</p>
+      </div>
+
+      <div class="panel">
+        <div class="btn-row">
+          <button class="btn" id="summaryBtn" onclick="summarizeNotes()">Generate Summary</button>
+        </div>
+        <div class="loader" id="summaryLoader"><span class="spinner"></span> Summarizing your notes...</div>
+        <div class="alert" id="summaryAlert"></div>
+        <div class="scroll-output" id="summaryOutput">
+          <p class="placeholder">Your summary will appear here.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Flashcards -->
+    <section id="flashcards" class="tab-panel">
+      <div class="page-header">
+        <span class="eyebrow">Step 04 &middot; Drill</span>
+        <h2><span class="header-icon">🃏</span>Flashcards</h2>
+        <p>Pick a document, work through one card at a time, click to flip.</p>
+      </div>
+
+      <div class="panel">
+        <div class="flashcards-toolbar">
+          <div class="field">
+            <label class="field-label">Document</label>
+            <select id="flashcardDocSelect">
+              <option value="">-- Select a document --</option>
+            </select>
+          </div>
+          <div class="field small">
+            <label class="field-label"># Cards</label>
+            <input type="number" id="flashcardCount" value="10" min="1" max="30" />
+          </div>
+          <div class="field small">
+            <button class="btn" id="flashcardBtn" onclick="loadFlashcards()">Generate</button>
+          </div>
+        </div>
+        <div class="loader" id="flashcardLoader"><span class="spinner"></span> Generating flashcards...</div>
+        <div class="alert" id="flashcardAlert"></div>
+        <div id="flashcardContainer"></div>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section id="quiz" class="tab-panel">
+      <div class="page-header">
+        <span class="eyebrow">Step 05 &middot; Test</span>
+        <h2><span class="header-icon">🧠</span>Quiz</h2>
+        <p>Pick a document and test yourself with multiple-choice questions.</p>
+      </div>
+
+      <div class="panel">
+        <div class="quiz-toolbar">
+          <div class="field">
+            <label class="field-label">Document</label>
+            <select id="quizDocSelect">
+              <option value="">-- Select a document --</option>
+            </select>
+          </div>
+          <div class="field small">
+            <label class="field-label"># Questions</label>
+            <input type="number" id="quizCount" value="5" min="1" max="20" />
+          </div>
+          <div class="field small">
+            <button class="btn" id="quizBtn" onclick="loadQuiz()">Generate</button>
+          </div>
+        </div>
+        <div class="loader" id="quizLoader"><span class="spinner"></span> Generating quiz...</div>
+        <div class="alert" id="quizAlert"></div>
+        <div class="quiz-score-bar hidden" id="quizScoreBar">
+          <div class="quiz-score-track"><div class="quiz-score-fill" id="quizScoreFill"></div></div>
+          <div class="quiz-score-label mono" id="quizScoreLabel"></div>
+        </div>
+        <div class="quiz-list" id="quizContainer"></div>
+      </div>
+    </section>
+
+    <!-- Study Plan -->
+    <section id="studyplan" class="tab-panel">
+      <div class="page-header">
+        <span class="eyebrow">Step 06 &middot; Plan Ahead</span>
+        <h2><span class="header-icon">📅</span>Study Plan Generator</h2>
+        <p>Generate a day-by-day study plan for any topic.</p>
+      </div>
+
+      <div class="panel">
+        <div class="form-grid">
+          <div>
+            <label class="field-label">Topic</label>
+            <input type="text" id="topicInput" placeholder="e.g. Organic Chemistry basics" />
+          </div>
+          <div>
+            <label class="field-label">Number of days</label>
+            <input type="number" id="daysInput" value="7" min="1" max="30" />
+          </div>
+        </div>
+        <div class="btn-row">
+          <button class="btn" id="planBtn" onclick="generateStudyPlan()">Generate Plan</button>
+        </div>
+        <div class="loader" id="planLoader"><span class="spinner"></span> Building your study plan...</div>
+        <div class="alert" id="planAlert"></div>
+        <div class="scroll-output" id="planOutput">
+          <p class="placeholder">Your study plan will appear here.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="app.js"></script>
+<script>
+  // Mirrors the existing status dot/text and doc count onto the Home panel.
+  // Does not modify or depend on internals of app.js — just observes existing DOM nodes.
+  (function () {
+    function mirror() {
+      var dot = document.getElementById('statusDot');
+      var text = document.getElementById('statusText');
+      var docMeta = document.getElementById('docCountMeta');
+      var homeDot = document.getElementById('homeStatusDot');
+      var homeText = document.getElementById('homeStatusText');
+      var homeDocCount = document.getElementById('homeDocCount');
+      if (dot && homeDot) homeDot.className = dot.className;
+      if (text && homeText) homeText.textContent = text.textContent;
+      if (docMeta && homeDocCount) homeDocCount.textContent = docMeta.textContent;
+    }
+    var target1 = document.getElementById('statusText');
+    var target2 = document.getElementById('docCountMeta');
+    var target3 = document.getElementById('statusDot');
+    [target1, target2, target3].forEach(function (el) {
+      if (el) new MutationObserver(mirror).observe(el, { attributes: true, childList: true, characterData: true, subtree: true });
+    });
+    mirror();
+  })();
+</script>
+</body>
+</html>
