@@ -109,8 +109,6 @@ You don't have to follow the steps in order — the Home dashboard lets you jump
 
 ![FlashCards Page](Smart_Study_Assistant/screenshots/flashcards.png)
 
-> Add more screenshots here (Home page, Quiz, Flashcards) as you take them.
-
 ---
 
 ## 🔮 Possible Future Improvements
