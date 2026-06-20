@@ -60,7 +60,7 @@ smart-study-assistant/
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/<your-username>/smart-study-assistant.git
+git clone https://github.com/burair-hyder/Smart-Study-Assistant.git
 cd smart-study-assistant
 ```
 
@@ -119,12 +119,13 @@ You don't have to follow the steps in order — the Home dashboard lets you jump
 
 ---
 
-## 🙋 Author
+## Group Members 🙋
+🎓 Ammar Kamran Ali – 24K-0732
+🎓 Burair Hyder – 24K-0804  
+🎓 Mutahir Ahmed Khan – 24K-0030  
+🎓 Sameed Imran – 24K-1036
 
-Built by **[Your Name]** as part of the AI Lab course, 4th Semester.
 
 ---
 
-## 📄 License
 
-This project is for academic purposes. Add a license here if you plan to open-source it (e.g. MIT).
