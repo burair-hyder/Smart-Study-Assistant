@@ -24,7 +24,7 @@ A **Home dashboard** ties everything together with quick shortcuts into each ste
 ## 🖥️ Tech Stack
 
 - **Frontend:** HTML, CSS, vanilla JavaScript
-- **Backend:** Python (Flask)
+- **Backend:** Python (Fast API)
 - **AI:** Google Gemini API — powers Q&A, summarization, flashcard, quiz, and study plan generation
 - **Storage:** JSON-based document store (`uploaded_docs.json`)
 
